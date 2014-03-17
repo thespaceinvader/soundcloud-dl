@@ -29,7 +29,7 @@ Usage
 --------------
 * Single URL download: `scdl.sh [TRACK(S) URL]` or `scdl.sh [USER URL]` or `scdl.sh [SET(S)URL]`
   The single URL download saves the file at your current location
-* To use the batch mode (mucho mas mod) just add each URL to the 'batch.txt' (each line one URL) and modify the path in the last line of 'batch.sh'. All mp3-files will be copied to this place after downloading. The script generates a file called th 'list'. It contains the name of every track allready downloaded so you can move the track to another destination and the script won´t download it again.
+* To use the batch mode (mucho mas mod) just add each URL to the 'batch.txt' (each line one URL, like in the examplefile) and modify the path in the last line of 'batch.sh'. All mp3-files will be copied to this place after downloading. The script generates a file called th 'list'. It contains the name of every track allready downloaded so you can move the track to another destination and the script won´t download it again.
 
 
 
