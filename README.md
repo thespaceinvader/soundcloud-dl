@@ -36,6 +36,7 @@ Usage
 Features
 --------------
 * NEW: Batch download all mp3-files from the sources specified in 'batch.txt'
+* NEW: Skip existing files (specified in the 'list')
 * Download all song of one user's page
 * Download all song of one song page
 * Download all song of one user's playlist page
@@ -49,6 +50,7 @@ Changelog
 --------------
 17/03/2014
 * Added batchmode
+* Download skips existing files
 
 18/01/2014 :
 * Replaced id3v2 with eyeD3 wich support image tag
