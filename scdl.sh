@@ -4,11 +4,6 @@
 # Share it if you like ;)
 ##############################################################
 
-echo ''
-echo ' *---------------------------------------------------------------------------*'
-echo '|      SoundcloudMusicDownloader(cURL/Wget version) |   FlyinGrub rework      |'
-echo ' *---------------------------------------------------------------------------*'
-
 function settags() {
     artist=$1
     title=$2
@@ -48,10 +43,13 @@ function downsong() { #Done!
     genre=$(echo "$page" | tr ">" "\n" | grep -A1 '<span class="genre search-deprecation-notification" data="/tags/' | tr ' ' "\n" | grep '</span' | cut -d "<" -f 1 | recode html..u8)
     # DL
     echo ""
-    if [ -e "$filename" ]; then
-        echo "[!] The song $filename has already been downloaded..."  && exit
+	if [  -e "$filename"  ]; then
+    echo "[!] The song $filename has already been downloaded..."
     else
-        echo "[-] Downloading $title..."
+    if grep -q "$filename" list ; then
+	echo "[!] The song $filename has already been downloaded..."
+    else
+    echo "[-] Downloading $title..."
     fi
     if $curlinstalled; then
         curl -# -L --user-agent 'Mozilla/5.0' -o "`echo -e "$filename"`" "$songurl";
@@ -61,6 +59,7 @@ function downsong() { #Done!
     settags "$artist" "$title" "$filename" "$genre" "$imageurl"
     echo "[i] Downloading of $filename finished"
     echo ''
+    fi
 }
 
 function downallsongs() {
@@ -98,9 +97,14 @@ function downallsongs() {
         else
             title=$(echo -e "$songs" | sed -n "$i"p | tr ">" "\n" | grep "</title" | cut -d "<" -f 1 | recode html..u8)
             filename=$(echo "$title".mp3 | tr '*/\?"<>|' '+       ' )
-            if [ -e "$filename" ]; then
-                echo "[!] The song $filename has already been downloaded..."  && exit
-            fi
+				
+					
+			if [  -e "$filename"  ]; then
+                echo "[!] The song $filename has already been downloaded..."
+            else
+            if grep -q "$filename" list ; then
+				echo "[!] The song $filename has already been downloaded..."
+            else
             artist=$(echo "$songs" | sed -n "$i"p | tr ">" "\n" | grep "</username" | cut -d "<" -f 1 | recode html..u8)
             genre=$(echo "$songs" | sed -n "$i"p | tr ">" "\n" | grep "</genre" | cut -d "<" -f 1 | recode html..u8)
             imageurl=$(echo "$songs" | sed -n "$i"p | tr ">" "\n" | grep "</artwork-url" | cut -d "<" -f 1 | sed 's/large/t500x500/g')
@@ -120,6 +124,8 @@ function downallsongs() {
             settags "$artist" "$title" "$filename" "$genre" "$imageurl"
             echo "[i] Downloading of $filename finished"
             echo ''
+            fi
+            fi
         fi
     done
 }
@@ -176,11 +182,14 @@ function downset() {
         fi
         artist=$(echo "$page" | grep -A3 $id | grep byArtist | cut -d"\"" -f2 | recode html..u8)
         filename=$(echo "$title".mp3 | tr '*/\?"<>|' '+       ' )      
-        if [ -e "$filename" ]; then
-            echo "[!] The song $filename has already been downloaded..."  && exit
+			
+		if [  -e "$filename"  ]; then
+        echo "[!] The song $filename has already been downloaded..."
         else
-            echo "[-] Downloading $title..."
-        fi
+        if grep -q "$filename" list ; then
+		echo "[!] The song $filename has already been downloaded..."
+        else
+        echo "[-] Downloading $title..."
         #----------settags-------#
         pageurl=$(echo "$page" | grep -A3 $id | grep url | cut -d"\"" -f2)
         if $curlinstalled; then
@@ -206,6 +215,8 @@ function downset() {
         settags "$artist" "$title" "$filename" "$genre" "$imageurl" "$album"
         echo "[i] Downloading of $filename finished"
         echo ''
+        fi
+		fi
     done
 }
 
