@@ -47,6 +47,9 @@ Features
 
 Changelog
 --------------
+17/03/2014
+* Added batchmode
+
 18/01/2014 :
 * Replaced id3v2 with eyeD3 wich support image tag
 * Added image & genre tags support for each type 
